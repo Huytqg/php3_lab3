@@ -7,14 +7,33 @@ use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
-    //Danh sách
+    //Trang chủ
     public function index(){
-        $books = DB::table('books')
+        // return view('books.index');
+        $books = DB::table('pets')
         ->join('categories', 'category_id', '=', 'categories.id')
-        ->select('books.*', 'name')
+        ->select('pets.*', 'name')
         ->orderByDesc('id')
         ->get();
         return view('books.index', compact('books'));
+    }
+    //Chi tiết sản phẩm
+    public function product_details($id){
+        $books = DB::table('pets')
+        ->where('id', $id)
+        ->get();
+        // dd($book);
+        $categories = DB::table('categories')->get();
+        return view('books.product_details', compact('books', 'categories'));
+    }
+    //Danh sách
+    public function list(){
+        $books = DB::table('pets')
+        ->join('categories', 'category_id', '=', 'categories.id')
+        ->select('pets.*', 'name')
+        ->orderByDesc('id')
+        ->get();
+        return view('books.list', compact('books'));
     }
     //Hiển thị form create
     public function create(){
@@ -35,18 +54,18 @@ class BookController extends Controller
             'quantity' => $request['quantity'],
             'category_id' => $request['category_id'],
         ];
-        DB::table('books')->insert($data);
+        DB::table('pets')->insert($data);
         return redirect()->route('book.index');
     }
     //Xoá sách
     public function destroy($id){
-        DB::table('books')->delete($id);
+        DB::table('pets')->delete($id);
         return redirect()->route('book.index');
     }
 
     //Hiển thị form cập nhập sách
     public function edit($id){
-        $book = DB::table('books')
+        $book = DB::table('pets')
         ->where('id', $id)
         ->first();
         // dd($book);
@@ -65,7 +84,7 @@ class BookController extends Controller
             'quantity' => $request['quantity'],
             'category_id' => $request['category_id'],
         ];
-        DB::table('books')->where('id', $request['id'])->update($data);
+        DB::table('pets')->where('id', $request['id'])->update($data);
         return redirect()->route('book.index');
     }
 }

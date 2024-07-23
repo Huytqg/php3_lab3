@@ -13,7 +13,7 @@
 
 <body>
     <div class="container">
-        <h1 class="text-center m-3">Cập nhập sách</h1>
+        <h1 class="text-center m-3">Cập nhập sản phẩm</h1>
     </div>
     <form action="{{route('book.update', $book->id)}}" method="post" class="container">
         @csrf
@@ -63,7 +63,7 @@
         </div>
         <div class="mb-3">
             <button type="submit" class="btn btn-success">Sửa</button>
-            <a href="{{route('book.index')}}" class="btn btn-success">Back list</a>
+            <a href="{{route('book.list')}}" class="btn btn-success">Back list</a>
         </div>
     </form>
 </body>
